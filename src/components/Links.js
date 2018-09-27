@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch'
+import LinkDetails from './LinkDetails.js'
 
 
 class Links extends Component {
 
-  	componentDidMount() {
+	constructor(props) {
+		super(props); 
 
+		this.state = {
+			dat: ''
+		}
+	}
+
+  	componentDidMount() {
+  		
+  		const api_key = process.env.REACT_APP_API_KEY
+  		const dat = []
+  		
+  		fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${api_key}`) 
+  			.then(res => 
+  				res.json()
+  			)
+  		.then(arts => {  			
+  			const dat= arts.results
+			this.setState({
+				dat: arts.results
+			})
+  		})  		
   	}
 
-	render() {
+  	
+
+	render() {	
+		
 		return (
 			<div className="App">
-        		<header className="App-header">         
-		          <h1 className="App-title">Welcome to Links</h1>
-		        </header>
-		        <p className="App-intro">
-		          To get started, edit <code>src/App.js</code> and save to reload.
-		        </p>
+        		<LinkDetails test={this.state.dat} />
 		    </div>
     	);
   	}
