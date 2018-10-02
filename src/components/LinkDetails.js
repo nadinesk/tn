@@ -79,16 +79,20 @@ render() {
 	const tsTop = this.state.dat != '' ? 
 		this.state.dat.slice(0,5).map((art) => (
 			<div>
-				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a></div>
+				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
+					<span style={{fontWeight: '300'}}> - {art.section} </span> 
+				</div>
 				<div style={{marginBottom: 10}} >{art.abstract}</div>				
 			</div>
 		))
 			: null
 	
 	const ts = this.state.dat != '' ? 
-		this.state.dat.slice(6,21).map((art) => (
+		this.state.dat.slice(6,50).map((art) => (
 			<div>
-				<div style={{marginBottom: 10, fontWeight: 'bold'}}><a href={art.url}>{art.title}</a></div>				
+				<div style={{marginBottom: 5, fontWeight: '400'}}><a href={art.url}>{art.title}</a>
+					<span style={{fontWeight: '300'}}> - {art.section} </span> 
+				</div>				
 			</div>
 		))
 			: null
@@ -113,31 +117,15 @@ render() {
 return (
 	<Grid>
 		<Row>
-			<Col className='colBorder' xs={12} md={6}>
+			<Col md={2}></Col>
+			<Col xs={12} md={8}>
 		        <h1 style={{textAlign: 'center'}}>Top Stories</h1>		       	        		       
-		    </Col>
-		    <Col className='colBorder' xs={12} md={6}>
-		        <h1 style={{textAlign: 'center'}}>Most Viewed</h1>		        
-		    </Col>
-		</Row>	  
-		<Row>
-			<Col className='colBorder' xs={12} md={6}>
 		        <div>{newItems}</div>		       	        		       
-		    </Col>
-		    <Col className='colBorder' xs={12} md={6}>
-		        <div>{newItemsMv}</div>		        
-		    </Col>
-		</Row>
-		<Row>
-			<Col className='colBorder' xs={12} md={6}>		    
-				<div>{tsTop}</div>  
+		        <div>{tsTop}</div>  
 		        <div>{ts}</div>  
-		    </Col>      
-			<Col className='colBorder' xs={12} md={6}>
-				<div>{mvTop}</div>  		    
-		        <div>{mv}</div>  
-		    </Col>      
-		</Row>		  
+		    </Col>		    
+		    <Col md={2}></Col>
+		</Row>	  		
 	</Grid>
   	);
   }
