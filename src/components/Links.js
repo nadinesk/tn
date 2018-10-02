@@ -9,7 +9,8 @@ class Links extends Component {
 		super(props); 
 
 		this.state = {
-			dat: ''
+			dat: '', 
+      mostViewed: ''
 		}
 	}
 
@@ -27,7 +28,19 @@ class Links extends Component {
 			this.setState({
 				dat: arts.results
 			})
-  		})  		
+  		})  
+
+      fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(mv => {       
+        console.log('mv', mv)
+        const mostViewed= mv.results
+      this.setState({
+        mostViewed: mv.results
+      })
+      })  		
   	}
 
   	
@@ -36,7 +49,7 @@ class Links extends Component {
 		
 		return (
 			<div className="App">
-        		<LinkDetails test={this.state.dat} />
+        		<LinkDetails test={this.state.dat} mostViewed={this.state.mostViewed}/>
 		    </div>
     	);
   	}
