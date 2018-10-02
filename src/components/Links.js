@@ -48,9 +48,9 @@ class Links extends Component {
 	render() {	
 		
 		return (
-			<div className="App">
+			<div>
         		<LinkDetails test={this.state.dat} mostViewed={this.state.mostViewed}/>
-		    </div>
+		  </div>
     	);
   	}
 }

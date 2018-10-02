@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch'
+import { Grid, Row, Col } from 'react-bootstrap';
 
 
 class LinkDetails extends Component {
@@ -63,7 +64,8 @@ render() {
 	    var endParen = ')'
 		
 		var items = sortable.slice(0, size).map(i => 
-		  <div style={{fontSize: (i[1]/0.9) * 6,color: col + i[1] * 0.3 + endParen}}>{i[0]}</div>	  
+		  <div style={{fontSize: (i[1]/0.98) * 6,color: col + i[1] * 0.4 + endParen, display: 'inline-block' }}>
+		  	{i[0]}{'\u00A0'}</div>	  
 		)
 
 		return items
@@ -71,40 +73,72 @@ render() {
 
 	var newItems = resultStr ? wordFreq(resultStr, this.state.stopWords): null
 	var newItemsMv = resultStrMv ? wordFreq(resultStrMv, this.state.stopWords): null
-
-	const ts = this.state.dat != '' ? 
-		this.state.dat.map((art) => (
+	var counterTs = 1
+	var counterMv = 1
+	
+	const tsTop = this.state.dat != '' ? 
+		this.state.dat.slice(0,5).map((art) => (
 			<div>
-			<div><a href={art.url}>{art.title}</a></div>
-			{art.multimedia[0] ? 
-			<div><img src={art.multimedia[0].url}/></div> : null
-			}
-			<div>{art.abstract}</div>
+				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a></div>
+				<div style={{marginBottom: 10}} >{art.abstract}</div>				
+			</div>
+		))
+			: null
+	
+	const ts = this.state.dat != '' ? 
+		this.state.dat.slice(6,21).map((art) => (
+			<div>
+				<div style={{marginBottom: 10, fontWeight: 'bold'}}><a href={art.url}>{art.title}</a></div>				
 			</div>
 		))
 			: null
 
-	const mv = this.state.mostViewed != '' ? 
-		this.state.mostViewed.map((art) => (
+    const mvTop = this.state.mostViewed != '' ? 
+		this.state.mostViewed.slice(0,5).map((art) => (
 			<div>
-			<div><a href={art.url}>{art.title}</a></div>
-			<div>{art.abstract}</div>
+				<div style={{fontSize: 16, fontWeight: 'bold'}}><a href={art.url}>{art.title}</a></div>
+				<div style={{marginBottom: 10}}>{art.abstract}</div>
+			</div>
+		))
+			: null			
+
+	const mv = this.state.mostViewed != '' ? 
+		this.state.mostViewed.slice(6,21).map((art) => (
+			<div>
+				<div style={{marginBottom: 10, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a></div>				
 			</div>
 		))
 			: null
 
 return (
-	<div>
-	        <h1>Top Stories</h1>
-	        <div> {newItems}</div>
-	        
-	        <div>{ts}</div>
-	        <h1>Most Viewed</h1>
-	        <div>{newItemsMv}</div>
-	        <div>{mv}</div>  
-
-	        
-	</div>
+	<Grid>
+		<Row>
+			<Col className='colBorder' xs={12} md={6}>
+		        <h1 style={{textAlign: 'center'}}>Top Stories</h1>		       	        		       
+		    </Col>
+		    <Col className='colBorder' xs={12} md={6}>
+		        <h1 style={{textAlign: 'center'}}>Most Viewed</h1>		        
+		    </Col>
+		</Row>	  
+		<Row>
+			<Col className='colBorder' xs={12} md={6}>
+		        <div>{newItems}</div>		       	        		       
+		    </Col>
+		    <Col className='colBorder' xs={12} md={6}>
+		        <div>{newItemsMv}</div>		        
+		    </Col>
+		</Row>
+		<Row>
+			<Col className='colBorder' xs={12} md={6}>		    
+				<div>{tsTop}</div>  
+		        <div>{ts}</div>  
+		    </Col>      
+			<Col className='colBorder' xs={12} md={6}>
+				<div>{mvTop}</div>  		    
+		        <div>{mv}</div>  
+		    </Col>      
+		</Row>		  
+	</Grid>
   	);
   }
 }
