@@ -87,7 +87,8 @@ class LinkDetails extends Component {
 			asdf: 'asdf', 
 			mostViewed: nextProps.mostViewed, 
 			articleType: nextProps.articleType, 
-			sectionType: nextProps.sectionType
+			sectionType: nextProps.sectionType, 
+			currentType: nextProps.currentType
 		})
 
 		this.handleSectionTypeSelect = this.handleSectionTypeSelect.bind(this)
@@ -133,9 +134,7 @@ render() {
 
 	var result = this.state.dat != '' ? this.state.dat.map(a => a.title) : null
 	var resultStr = result ? result.join(' ') : null
-	var resultMv = this.state.mostViewed != '' ? this.state.mostViewed.map(a => a.title) : null
-	var resultStrMv = resultMv ? resultMv.join(' ') : null
-
+	
 	var stopWords = this.state.stopWords
 	
 	function wordFreq(string, removeWords) {
@@ -173,11 +172,10 @@ render() {
 	}
 
 	var newItems = resultStr ? wordFreq(resultStr, this.state.stopWords): null
-	var newItemsMv = resultStrMv ? wordFreq(resultStrMv, this.state.stopWords): null
-	var counterTs = 1
-	var counterMv = 1
+	
 	debugger
-	const tsTop = (this.state.articleType == 'Top Stories') ? 
+	
+	const tsTop = (this.state.currentType == 'topStories') ? 
 		this.state.dat.slice(0,5).map((art) => (			
 			<div className='topFive'>
 				{art.multimedia[0]  ? 
@@ -191,7 +189,7 @@ render() {
 				<div style={{marginBottom: 10}} >{art.abstract}</div>				
 			</div>
 		))
-			: this.state.articleType == 'Most Viewed' ? 
+			: this.state.currentType == 'mostViewed' ? 
 				this.state.dat.slice(0,5).map((art) => (
 					<div className='topFive'>
 						{art.media ? 

@@ -13,7 +13,8 @@ class Links extends Component {
       mostViewed: '',       
       displayValue: 'none', 
       articleType: 'Top Stories', 
-      sectionType: 'home'
+      sectionType: 'home', 
+      currentType: 'topStories'
 		}
 
      this.handleClick = this.handleClick.bind(this)
@@ -59,7 +60,8 @@ class Links extends Component {
         this.setState({
            dat: arts.results, 
            pageTitle: 'Top Stories', 
-           sectionType: 'home'
+           sectionType: 'home', 
+           currentType: 'topStories'
         })
         })  
       } else if (event.target.innerText == 'Most Viewed') {          
@@ -72,7 +74,8 @@ class Links extends Component {
         this.setState({
            dat: arts.results, 
            pageTitle: 'Top Stories', 
-           sectionType:'all-sections'
+           sectionType:'all-sections', 
+           currentType: 'mostViewed'
         })
         })  
       }
@@ -89,7 +92,7 @@ class Links extends Component {
 			<div>         
             <div onClick={this.handleClick}>Top Stories</div>             
             <div onClick={this.handleClick}>Most Viewed</div>             
-            <LinkDetails articleType={this.state.articleType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>
+            <LinkDetails articleType={this.state.articleType} currentType={this.state.currentType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>
 		  </div>
     	);
   	}
