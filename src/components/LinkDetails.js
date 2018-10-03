@@ -182,31 +182,31 @@ render() {
 							<div ><img style={{width: "100%", display:'inline-block'}} src={art.multimedia[4].url}/></div> : 
 						 	null
 				}
-				<div style={{fontSize: 16, fontWeight: 'bold'}}>{art.title}
+				<div className='artTitleTF'>{art.title}
 					<span style={{fontWeight: '300'}}> - {art.section} </span> 
 					
 				</div>
-				<div style={{marginBottom: 10}} >{art.abstract}</div>	</a> 			
+				<div className='artAbstractTF'  >{art.abstract}</div>	</a> 			
 			</div>
 		))
 			: this.state.currentType == 'mostViewed' ? 
 				this.state.dat.slice(0,5).map((art) => (
-					<div className='topFive'>
+					<div className='topFive'><a href={art.url}>
 						{art.media[0]["media-metadata"][4] ? 
 									<div><img style={{width: "100%"}} src={art.media[0]["media-metadata"][4].url}/></div> : null							 	
 						}
-						<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
+						<div className='artTitleTF'> {art.title}
 							<span style={{fontWeight: '300'}}> - {art.section} </span> 
 							
 						</div>
-						<div style={{marginBottom: 10}} >{art.abstract}</div>				
+						<div className='artAbstractTF' >{art.abstract}</div>	</a>			
 					</div> 
 		)): null
 	
 	const ts = this.state.dat != '' ? 
 		this.state.dat.slice(6,50).map((art) => (
-			<div>
-				<div style={{marginBottom: 5, fontWeight: '400'}}><a href={art.url}>{art.title}</a>
+			<div className='otherArts'>
+				<div  ><a href={art.url}>{art.title}</a>
 					<span style={{fontWeight: '300'}}> - {art.section} </span> 
 				</div>				
 			</div>
@@ -215,9 +215,9 @@ render() {
 
 
 	const menuItems = this.state.articleType == 'Top Stories' ? this.state.sectionTypes.map((section) => (
-			 <MenuItem eventKey={section}>{section}</MenuItem>
+			 <MenuItem className='dropdownButton' eventKey={section}>{section}</MenuItem>
 		)) : this.state.sectionTypesMV.map((section) => (
-			 <MenuItem eventKey={section}>{section}</MenuItem>
+			 <MenuItem className='dropdownButton'  eventKey={section}>{section}</MenuItem>
 		)) 
 
 	
@@ -227,16 +227,17 @@ return (
 		<Row>
 			<Col md={3}></Col>
 			<Col xs={12} md={6}>
-		        <h1 style={{textAlign: 'center'}}>{this.state.articleType}</h1>		
+		        <h1 className="pageTitle" style={{textAlign: 'center'}}>{this.state.articleType}</h1>		
 		          <DropdownButton
                   title={this.state.sectionType}              
                   id='sectionType'              
-                  onSelect={this.handleSectionTypeSelect}
+                  onSelect={this.handleSectionTypeSelect }
+                  className='dropdownButton'
                  >
 					{menuItems}               
                 </DropdownButton>       	        		       
 		        <div  style={{ marginTop: 5, padding: 10, borderBottom: '1px solid #eee', borderTop: '1px solid #eee'}}>
-		        	<div  >At a Glance (top words):</div>
+		        	<div className='topWordsTitle'>At a Glance (top words):</div>
 		        	<div>{newItems}</div>		
 		        </div>       	        		       
 		        <div>{tsTop}</div>  

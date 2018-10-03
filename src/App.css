@@ -22,12 +22,49 @@
   font-size: large;
 }
 
+body, .pageTitle, .dropdownButton{
+   font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif
+}
+
+body {
+  font-size: 16px;
+}
+
+a {
+  color:black;
+}
+
+.topWordsTitle {
+  font-weight: bold;
+}
+
+.artTitleTF {  
+  font-weight: bold;
+  margin-top:15px;
+  font-size: 18px;
+}
+
+.topFive a:hover {
+  text-decoration: none;
+}
+
 .topFive {
    margin: 5px;
    padding: 3%;
 }
 .topFive:hover {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.artAbstractTF {
+  margin-bottom: 5px; 
+  color: #2F4F4F;
+}
+
+.otherArts {
+  margin-bottom: 10px; 
+  font-weight: bold;
+  padding: 5px 3% 5px 3%;
 }
 
 @keyframes App-logo-spin {
