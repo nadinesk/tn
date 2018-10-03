@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch'
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, DropdownButton, MenuItem } from 'react-bootstrap';
 
 
 class LinkDetails extends Component {
@@ -11,7 +11,35 @@ class LinkDetails extends Component {
 		this.state = {
 			dat: '', 
 			asdf: 'asdf', 
-			mostViewed: '', 
+			mostViewed: '',
+			sectionType: 'home',
+			sectionTypes: ['home',
+							'opinion',
+							'world',
+							'national',
+							'politics',
+							'upshot',
+							'nyregion',
+							'business',
+							'technology',
+							'science',
+							'health',
+							'sports',
+							'arts',
+							'books',
+							'movies',
+							'theater',
+							'sundayreview',
+							'fashion',
+							'tmagazine',
+							'food',
+							'travel',
+							'magazine',
+							'realestate',
+							'automobiles',
+							'obituaries',
+							'insider'
+							],
 			stopWords: ['—','i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
 		}
 	}
@@ -24,6 +52,25 @@ class LinkDetails extends Component {
 			asdf: 'asdf', 
 			mostViewed: nextProps.mostViewed
 		})
+
+		this.handleSectionTypeSelect = this.handleSectionTypeSelect.bind(this)
+	}
+
+	handleSectionTypeSelect = event => {
+		const api_key = process.env.REACT_APP_API_KEY
+  		const dat = []
+  		
+  		fetch(`https://api.nytimes.com/svc/topstories/v2/${event}.json?api-key=${api_key}`) 
+  			.then(res => 
+  				res.json()
+  			)
+  		.then(arts => {  			
+  			const dat= arts.results
+			this.setState({
+				dat: arts.results, 
+				sectionType: event        	
+			})
+  		})  
 	}
 
 
@@ -114,12 +161,25 @@ render() {
 		))
 			: null
 
+	const menuItems = this.state.sectionTypes.map((section) => (
+			 <MenuItem eventKey={section}>{section}</MenuItem>
+		))
+
+	
+
 return (
 	<Grid>
 		<Row>
 			<Col md={2}></Col>
 			<Col xs={12} md={8}>
-		        <h1 style={{textAlign: 'center'}}>{this.props.pageTitle}</h1>		       	        		       
+		        <h1 style={{textAlign: 'center'}}>Top Stories</h1>		
+		          <DropdownButton
+                  title={this.state.sectionType}              
+                  id='sectionType'              
+                  onSelect={this.handleSectionTypeSelect}
+                 >
+                 	{menuItems}               
+                </DropdownButton>       	        		       
 		        <div>{newItems}</div>		       	        		       
 		        <div>{tsTop}</div>  
 		        <div>{ts}</div>  
