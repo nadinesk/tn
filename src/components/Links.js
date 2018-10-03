@@ -13,7 +13,7 @@ class Links extends Component {
       mostViewed: '',       
       displayValue: 'none', 
       articleType: 'Top Stories', 
-      sectionType: 'home', 
+      sectionType: 'section', 
       currentType: 'topStories'
 		}
 

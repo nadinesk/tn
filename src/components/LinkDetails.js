@@ -164,7 +164,7 @@ render() {
 	    var endParen = ')'
 		
 		var items = sortable.slice(0, size).map(i => 
-		  <div style={{fontSize: (i[1]/0.98) * 6,color: col + i[1] * 0.4 + endParen, display: 'inline-block' }}>
+		  <div style={{fontSize: (i[1]/0.98) * 6.5,color: col + i[1] * 0.7 + endParen, display: 'inline-block' }}>
 		  	{i[0]}{'\u00A0'}</div>	  
 		)
 
@@ -177,16 +177,16 @@ render() {
 	
 	const tsTop = (this.state.currentType == 'topStories') ? 
 		this.state.dat.slice(0,5).map((art) => (			
-			<div className='topFive'>
+			<div className='topFive'> <a href={art.url}>
 				{art.multimedia[0]  ? 
 							<div ><img style={{width: "100%", display:'inline-block'}} src={art.multimedia[4].url}/></div> : 
 						 	null
 				}
-				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
+				<div style={{fontSize: 16, fontWeight: 'bold'}}>{art.title}
 					<span style={{fontWeight: '300'}}> - {art.section} </span> 
 					
 				</div>
-				<div style={{marginBottom: 10}} >{art.abstract}</div>				
+				<div style={{marginBottom: 10}} >{art.abstract}</div>	</a> 			
 			</div>
 		))
 			: this.state.currentType == 'mostViewed' ? 
@@ -233,9 +233,12 @@ return (
                   id='sectionType'              
                   onSelect={this.handleSectionTypeSelect}
                  >
-                 	{menuItems}               
+					{menuItems}               
                 </DropdownButton>       	        		       
-		        <div>{newItems}</div>		       	        		       
+		        <div  style={{ marginTop: 5, padding: 10, borderBottom: '1px solid #eee', borderTop: '1px solid #eee'}}>
+		        	<div  >At a Glance (top words):</div>
+		        	<div>{newItems}</div>		
+		        </div>       	        		       
 		        <div>{tsTop}</div>  
 		        <div>{ts}</div>  
 		    </Col>		    
