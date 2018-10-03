@@ -179,7 +179,7 @@ render() {
 		this.state.dat.slice(0,5).map((art) => (			
 			<div className='topFive'>
 				{art.multimedia[0]  ? 
-							<div ><img style={{width: 250, display:'inline-block'}} src={art.multimedia[2].url}/></div> : 
+							<div ><img style={{width: "100%", display:'inline-block'}} src={art.multimedia[4].url}/></div> : 
 						 	null
 				}
 				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
@@ -192,8 +192,8 @@ render() {
 			: this.state.currentType == 'mostViewed' ? 
 				this.state.dat.slice(0,5).map((art) => (
 					<div className='topFive'>
-						{art.media ? 
-									<div><img style={{width: 250}} src={art.media[0]["media-metadata"][2].url}/></div> : null							 	
+						{art.media[0]["media-metadata"][4] ? 
+									<div><img style={{width: "100%"}} src={art.media[0]["media-metadata"][4].url}/></div> : null							 	
 						}
 						<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
 							<span style={{fontWeight: '300'}}> - {art.section} </span> 
