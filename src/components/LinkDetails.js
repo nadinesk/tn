@@ -11,8 +11,8 @@ class LinkDetails extends Component {
 		this.state = {
 			dat: '', 
 			asdf: 'asdf', 
-			mostViewed: '',
 			sectionType: 'home',
+			mostViewed: '',			
 			sectionTypes: ['home',
 							'opinion',
 							'world',
@@ -40,17 +40,55 @@ class LinkDetails extends Component {
 							'obituaries',
 							'insider'
 							],
+			sectionTypesMV: ['Arts',
+							'Automobiles',
+							'Blogs',
+							'Books',
+							'Business Day',
+							'Education',
+							'Fashion & Style',
+							'Food',
+							'Health',
+							'Job Market',
+							'Magazine',
+							'membercenter',
+							'Movies',
+							'Multimedia',
+							'N.Y.%20%2F%20Region',
+							'NYT Now',
+							'Obituaries',
+							'Open',
+							'Opinion',
+							'Public Editor',
+							'Real Estate',
+							'Science',
+							'Sports',
+							'Style',
+							'Sunday Review',
+							'T Magazine',
+							'Technology',
+							'The Upshot',
+							'Theater',
+							'Times Insider',
+							'Today’s Paper',
+							'Travel',
+							'U.S.',
+							'World',
+							'Your Money',
+							'all-sections'],
 			stopWords: ['—','i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		console.log('nextProps.test', nextProps.test)
-
+		debugger
 		this.setState({
 			dat: nextProps.test,
 			asdf: 'asdf', 
-			mostViewed: nextProps.mostViewed
+			mostViewed: nextProps.mostViewed, 
+			articleType: nextProps.articleType, 
+			sectionType: nextProps.sectionType
 		})
 
 		this.handleSectionTypeSelect = this.handleSectionTypeSelect.bind(this)
@@ -60,17 +98,34 @@ class LinkDetails extends Component {
 		const api_key = process.env.REACT_APP_API_KEY
   		const dat = []
   		
-  		fetch(`https://api.nytimes.com/svc/topstories/v2/${event}.json?api-key=${api_key}`) 
+  		if (this.state.articleType == 'Top Stories') {  			
+  			fetch(`https://api.nytimes.com/svc/topstories/v2/${event}.json?api-key=${api_key}`) 
   			.then(res => 
   				res.json()
   			)
-  		.then(arts => {  			
-  			const dat= arts.results
-			this.setState({
-				dat: arts.results, 
-				sectionType: event        	
-			})
-  		})  
+	  		.then(arts => {  			
+	  			const dat= arts.results
+				this.setState({
+					dat: arts.results, 
+					sectionType: event        	
+				})
+	  		})  	
+  		}
+  		else if (this.state.articleType == 'Most Viewed') {  			
+  			fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/${event}/1.json?api-key=${api_key}`) 
+  			.then(res => 
+  				res.json()
+  			)
+	  		.then(arts => {  			
+	  			const dat= arts.results
+	  			debugger
+				this.setState({
+					dat: arts.results, 
+					sectionType: event        	
+				})
+	  		})  	
+  		}
+  		
 	}
 
 
@@ -123,16 +178,33 @@ render() {
 	var counterTs = 1
 	var counterMv = 1
 	
-	const tsTop = this.state.dat != '' ? 
+	const tsTop = this.state.articleType == 'Top Stories' ? 
 		this.state.dat.slice(0,5).map((art) => (
-			<div>
+			<div className='topFive'>
+				{art.multimedia[0] ? 
+							<div ><img style={{width: 250, display:'inline-block'}} src={art.multimedia[2].url}/></div> : 
+						 	null
+				}
 				<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
 					<span style={{fontWeight: '300'}}> - {art.section} </span> 
+					
 				</div>
 				<div style={{marginBottom: 10}} >{art.abstract}</div>				
 			</div>
 		))
-			: null
+			: this.state.articleType == 'Most Viewed' ? 
+				this.state.dat.slice(0,5).map((art) => (
+					<div className='topFive'>
+						{art.media ? 
+									<div><img style={{width: 250}} src={art.media[0]["media-metadata"][2].url}/></div> : null							 	
+						}
+						<div style={{fontSize: 16, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a> 
+							<span style={{fontWeight: '300'}}> - {art.section} </span> 
+							
+						</div>
+						<div style={{marginBottom: 10}} >{art.abstract}</div>				
+					</div> 
+		)): null
 	
 	const ts = this.state.dat != '' ? 
 		this.state.dat.slice(6,50).map((art) => (
@@ -144,35 +216,21 @@ render() {
 		))
 			: null
 
-    const mvTop = this.state.mostViewed != '' ? 
-		this.state.mostViewed.slice(0,5).map((art) => (
-			<div>
-				<div style={{fontSize: 16, fontWeight: 'bold'}}><a href={art.url}>{art.title}</a></div>
-				<div style={{marginBottom: 10}}>{art.abstract}</div>
-			</div>
-		))
-			: null			
 
-	const mv = this.state.mostViewed != '' ? 
-		this.state.mostViewed.slice(6,21).map((art) => (
-			<div>
-				<div style={{marginBottom: 10, fontWeight: 'bold'}}> <a href={art.url}>{art.title}</a></div>				
-			</div>
-		))
-			: null
-
-	const menuItems = this.state.sectionTypes.map((section) => (
+	const menuItems = this.state.articleType == 'Top Stories' ? this.state.sectionTypes.map((section) => (
 			 <MenuItem eventKey={section}>{section}</MenuItem>
-		))
+		)) : this.state.sectionTypesMV.map((section) => (
+			 <MenuItem eventKey={section}>{section}</MenuItem>
+		)) 
 
 	
 
 return (
 	<Grid>
 		<Row>
-			<Col md={2}></Col>
-			<Col xs={12} md={8}>
-		        <h1 style={{textAlign: 'center'}}>Top Stories</h1>		
+			<Col md={3}></Col>
+			<Col xs={12} md={6}>
+		        <h1 style={{textAlign: 'center'}}>{this.state.articleType}</h1>		
 		          <DropdownButton
                   title={this.state.sectionType}              
                   id='sectionType'              
@@ -184,7 +242,7 @@ return (
 		        <div>{tsTop}</div>  
 		        <div>{ts}</div>  
 		    </Col>		    
-		    <Col md={2}></Col>
+		    <Col md={3}></Col>
 		</Row>	  		
 	</Grid>
   	);
