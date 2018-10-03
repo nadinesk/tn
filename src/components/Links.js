@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch'
 import LinkDetails from './LinkDetails.js'
+import { Grid, Row, Col, Navbar, Nav, NavItem} from 'react-bootstrap';
 
 
 class Links extends Component {
@@ -45,12 +46,14 @@ class Links extends Component {
       debugger
       const api_key = process.env.REACT_APP_API_KEY
       const dat = []
+
+      const textClick = event.target.innerText 
+
       this.setState({
-        articleType: event.target.innerText
+        articleType: textClick
       })
 
-
-      if (event.target.innerText == 'Top Stories') {
+      if (textClick == 'Top Stories' || textClick == 'NewsKong' ) {
           fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${api_key}`) 
           .then(res => 
             res.json()
@@ -62,9 +65,10 @@ class Links extends Component {
            pageTitle: 'Top Stories', 
            sectionType: 'home', 
            currentType: 'topStories'
+          
         })
         })  
-      } else if (event.target.innerText == 'Most Viewed') {          
+      } else if (textClick  == 'Most Viewed') {          
           fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=${api_key}`) 
           .then(res => 
             res.json()
@@ -88,12 +92,41 @@ class Links extends Component {
 
 	render() {	
     		
-		return (
-			<div>         
-            <div onClick={this.handleClick}>Top Stories</div>             
-            <div onClick={this.handleClick}>Most Viewed</div>             
-            <LinkDetails articleType={this.state.articleType} currentType={this.state.currentType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>
-		  </div>
+		return (		
+        <div> 
+          <Row>               
+              <Navbar>
+              <Row> 
+                  <Col style={{textAlign: 'left', color: "#696969", marginTop: 5, marginBottom: 0}} md={12}>The New York Times' Top and Most Popular Stories</Col>
+                  
+                </Row>
+                
+              <Row>
+               <Col md={3}></Col>
+                <Col xs={12} md={6}>  
+                <Navbar.Header>
+                  <Navbar.Brand>
+                    <a href="#">NewsKong</a>
+                  </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                  <NavItem eventKey={1} onClick={this.handleClick} >
+                    Top Stories
+                  </NavItem>
+                  <NavItem eventKey={2} onClick={this.handleClick} >
+                    Most Viewed
+                  </NavItem>     
+                   
+                </Nav>
+                </Col>
+                <Col md={3}></Col>   
+                </Row>                
+              </Navbar>   
+            </Row>
+            
+            
+            <LinkDetails articleType={this.state.articleType} currentType={this.state.currentType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>		    
+      </div>
     	);
   	}
 }
