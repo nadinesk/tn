@@ -119,7 +119,7 @@ return (
 		<Row>
 			<Col md={2}></Col>
 			<Col xs={12} md={8}>
-		        <h1 style={{textAlign: 'center'}}>Top Stories</h1>		       	        		       
+		        <h1 style={{textAlign: 'center'}}>{this.props.pageTitle}</h1>		       	        		       
 		        <div>{newItems}</div>		       	        		       
 		        <div>{tsTop}</div>  
 		        <div>{ts}</div>  

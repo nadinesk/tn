@@ -10,11 +10,16 @@ class Links extends Component {
 
 		this.state = {
 			dat: '', 
-      mostViewed: ''
+      mostViewed: '',       
+      displayValue: 'none'
 		}
+
+     this.handleTSClick = this.handleTSClick.bind(this)
+     this.handleMVClick = this.handleMVClick.bind(this)
 	}
 
-  	componentDidMount() {
+  	
+    componentDidMount() {
   		
   		const api_key = process.env.REACT_APP_API_KEY
   		const dat = []
@@ -26,7 +31,8 @@ class Links extends Component {
   		.then(arts => {  			
   			const dat= arts.results
 			this.setState({
-				dat: arts.results
+				dat: arts.results, 
+         pageTitle: 'Top Stories'
 			})
   		})  
 
@@ -43,13 +49,54 @@ class Links extends Component {
       })  		
   	}
 
+    handleTSClick = event => {
+     
+      const api_key = process.env.REACT_APP_API_KEY
+      const dat = []
+      
+      fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(arts => {       
+        const dat= arts.results
+      this.setState({
+        dat: arts.results, 
+        pageTitle: 'Top Stories',     
+        displayValue: 'none'
+      })
+      })  
+    }
+
+    handleMVClick = event => {
+       
+      const api_key = process.env.REACT_APP_API_KEY
+      const dat = []
+      
+      fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(arts => {       
+        console.log('mv', arts)
+        const dat= arts.results
+      this.setState({
+        dat: arts.results,
+        pageTitle: 'Most Viewed',
+        displayValue: 'block'
+      })
+      })    
+    }
   	
 
 	render() {	
 		
 		return (
-			<div>
-        		<LinkDetails test={this.state.dat} mostViewed={this.state.mostViewed}/>
+			<div> 
+        		<div onClick={this.handleTSClick}> Top Stories </div>
+            <div onClick={this.handleMVClick}> Most Viewed </div>
+            <div style={{display: this.state.displayValue}}> asdf</div>
+            <LinkDetails test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>
 		  </div>
     	);
   	}
