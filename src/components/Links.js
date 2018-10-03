@@ -41,11 +41,13 @@ class Links extends Component {
   	}
 
     handleClick = event => {
+      debugger
       const api_key = process.env.REACT_APP_API_KEY
       const dat = []
       this.setState({
         articleType: event.target.innerText
       })
+
 
       if (event.target.innerText == 'Top Stories') {
           fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${api_key}`) 

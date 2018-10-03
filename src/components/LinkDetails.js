@@ -81,8 +81,7 @@ class LinkDetails extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('nextProps.test', nextProps.test)
-		debugger
+		console.log('nextProps.test', nextProps.test)		
 		this.setState({
 			dat: nextProps.test,
 			asdf: 'asdf', 
@@ -177,11 +176,11 @@ render() {
 	var newItemsMv = resultStrMv ? wordFreq(resultStrMv, this.state.stopWords): null
 	var counterTs = 1
 	var counterMv = 1
-	
-	const tsTop = this.state.articleType == 'Top Stories' ? 
-		this.state.dat.slice(0,5).map((art) => (
+	debugger
+	const tsTop = (this.state.articleType == 'Top Stories') ? 
+		this.state.dat.slice(0,5).map((art) => (			
 			<div className='topFive'>
-				{art.multimedia[0] ? 
+				{art.multimedia[0]  ? 
 							<div ><img style={{width: 250, display:'inline-block'}} src={art.multimedia[2].url}/></div> : 
 						 	null
 				}
