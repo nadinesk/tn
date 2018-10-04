@@ -97,7 +97,7 @@ class Links extends Component {
           <Row>               
               <Navbar>
               <Row> 
-                  <Col style={{textAlign: 'left', color: "#696969", marginTop: 5, marginBottom: 0}} md={12}>The New York Times' Top and Most Popular Stories</Col>
+                  <Col style={{textAlign: 'left', color: "#A9A9A9", marginTop: 5, marginBottom: 0}} md={12}>The New York Times' Top and Most Popular Stories</Col>
                   
                 </Row>
                 
