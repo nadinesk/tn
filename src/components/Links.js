@@ -106,14 +106,14 @@ class Links extends Component {
                 <Col xs={12} md={6}>  
                 <Navbar.Header>
                   <Navbar.Brand>
-                    <a href="#">NewsKong</a>
+                    <a  href="#">NewsKong</a>
                   </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
                   <NavItem eventKey={1} onClick={this.handleClick} >
                     Top Stories
                   </NavItem>
-                  <NavItem eventKey={2} onClick={this.handleClick} >
+                  <NavItem  eventKey={2} onClick={this.handleClick} >
                     Most Viewed
                   </NavItem>     
                    
