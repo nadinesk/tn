@@ -173,11 +173,11 @@ render() {
 
 	var newItems = resultStr ? wordFreq(resultStr, this.state.stopWords): null
 	
-	
+    debugger	
 	const tsTop = (this.state.currentType == 'topStories') ? 
 		this.state.dat.slice(0,5).map((art) => (			
 			<div className='topFive'> <a href={art.url}>
-				{art.multimedia[0]  ? 
+				{art.multimedia[4]  ? 
 							<div ><img style={{width: "100%", display:'inline-block'}} src={art.multimedia[4].url}/></div> : 
 						 	null
 				}
