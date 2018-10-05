@@ -173,7 +173,6 @@ render() {
 
 	var newItems = resultStr ? wordFreq(resultStr, this.state.stopWords): null
 	
-	debugger
 	
 	const tsTop = (this.state.currentType == 'topStories') ? 
 		this.state.dat.slice(0,5).map((art) => (			
