@@ -77,9 +77,38 @@ class Links extends Component {
           const dat= arts.results
         this.setState({
            dat: arts.results, 
-           pageTitle: 'Top Stories', 
+           pageTitle: 'Most Viewed', 
            sectionType:'all-sections', 
            currentType: 'mostViewed'
+        })
+        })  
+      } else if (textClick  == 'Most Shared') {          
+          fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostshared/all-sections/1.json?api-key=${api_key}`) 
+          .then(res => 
+            res.json()
+          )
+        .then(arts => {       
+          const dat= arts.results
+        this.setState({
+           dat: arts.results, 
+           pageTitle: 'Most Shared', 
+           sectionType:'all-sections', 
+           currentType: 'mostShared'
+        })
+        })  
+      }
+       else if (textClick  == 'Most Emailed') {          
+          fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostemailed/all-sections/1.json?api-key=${api_key}`) 
+          .then(res => 
+            res.json()
+          )
+        .then(arts => {       
+          const dat= arts.results
+        this.setState({
+           dat: arts.results, 
+           pageTitle: 'Most Emailed', 
+           sectionType:'all-sections', 
+           currentType: 'mostEmailed'
         })
         })  
       }
@@ -115,6 +144,12 @@ class Links extends Component {
                   </NavItem>
                   <NavItem  eventKey={2} onClick={this.handleClick} >
                     Most Viewed
+                  </NavItem>     
+                  <NavItem  eventKey={3} onClick={this.handleClick} >
+                    Most Shared
+                  </NavItem>     
+                  <NavItem  eventKey={3} onClick={this.handleClick} >
+                    Most Emailed
                   </NavItem>     
                    
                 </Nav>
