@@ -111,35 +111,20 @@ class LinkDetails extends Component {
 				})
 	  		})  	
   		}
-  		else if (this.state.articleType == 'Most Viewed') {  			
+  		else if (this.state.articleType == 'Most Viewed' || this.state.articleType == 'Most Shared' ||  
+  				 this.state.articleType == 'Most Emailed') {  			
   			fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/${event}/1.json?api-key=${api_key}`) 
   			.then(res => 
   				res.json()
   			)
 	  		.then(arts => {  			
-	  			const dat= arts.results
-	  			debugger
+	  			const dat= arts.results	  			
 				this.setState({
 					dat: arts.results, 
 					sectionType: event        	
 				})
 	  		})  	
   		}
-  		else if (this.state.articleType == 'Most Shared') {  			
-  			fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostshared/${event}/1.json?api-key=${api_key}`) 
-  			.then(res => 
-  				res.json()
-  			)
-	  		.then(arts => {  			
-	  			const dat= arts.results
-	  			debugger
-				this.setState({
-					dat: arts.results, 
-					sectionType: event        	
-				})
-	  		})  	
-  		}
-  		
 	}
 
 
