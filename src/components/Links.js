@@ -15,7 +15,10 @@ class Links extends Component {
       displayValue: 'none', 
       articleType: 'Top Stories', 
       sectionType: 'section', 
-      currentType: 'topStories'
+      currentType: 'topStories', 
+      mv: '', 
+      msh: '', 
+      mem: ''
 		}
 
      this.handleClick = this.handleClick.bind(this)
@@ -27,7 +30,8 @@ class Links extends Component {
   		
   		const api_key = process.env.REACT_APP_API_KEY
   		const dat = []
-  		
+
+      
   		fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${api_key}`) 
   			.then(res => 
   				res.json()
@@ -40,10 +44,42 @@ class Links extends Component {
 			})
   		})  
 
+      fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/1.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(arts => {              
+        this.setState({
+          mv: arts.results[0],          
+        })
+      })  
+
+
+      fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostshared/all-sections/1.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(arts => {              
+        this.setState({
+          msh: arts.results[0],          
+        })
+      })  
+
+      fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostemailed/all-sections/1.json?api-key=${api_key}`) 
+        .then(res => 
+          res.json()
+        )
+      .then(arts => {              
+        
+        this.setState({
+          mem: arts.results[0],          
+        })
+      })  
+
   	}
 
     handleClick = event => {
-      debugger
+      
       const api_key = process.env.REACT_APP_API_KEY
       const dat = []
 
@@ -160,7 +196,7 @@ class Links extends Component {
             </Row>
             
             
-            <LinkDetails articleType={this.state.articleType} currentType={this.state.currentType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>		    
+            <LinkDetails mv={this.state.mv} msh={this.state.msh} mem={this.state.mem} articleType={this.state.articleType} currentType={this.state.currentType} sectionType={this.state.sectionType} test={this.state.dat} mostViewed={this.state.mostViewed} pageTitle={this.state.pageTitle}/>		    
       </div>
     	);
   	}

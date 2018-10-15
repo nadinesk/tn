@@ -111,20 +111,35 @@ class LinkDetails extends Component {
 				})
 	  		})  	
   		}
-  		else if (this.state.articleType == 'Most Viewed' || this.state.articleType == 'Most Shared' ||  
-  				 this.state.articleType == 'Most Emailed') {  			
+  		else if (this.state.articleType == 'Most Viewed') {  			
   			fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostviewed/${event}/1.json?api-key=${api_key}`) 
   			.then(res => 
   				res.json()
   			)
 	  		.then(arts => {  			
-	  			const dat= arts.results	  			
+	  			const dat= arts.results
+	  			debugger
 				this.setState({
 					dat: arts.results, 
 					sectionType: event        	
 				})
 	  		})  	
   		}
+  		else if (this.state.articleType == 'Most Shared') {  			
+  			fetch(`https://api.nytimes.com/svc/mostpopular/v2/mostshared/${event}/1.json?api-key=${api_key}`) 
+  			.then(res => 
+  				res.json()
+  			)
+	  		.then(arts => {  			
+	  			const dat= arts.results
+	  			debugger
+				this.setState({
+					dat: arts.results, 
+					sectionType: event        	
+				})
+	  		})  	
+  		}
+  		
 	}
 
 
@@ -189,10 +204,7 @@ render() {
 		))
 			: this.state.currentType == 'mostViewed' ? 
 				this.state.dat.slice(0,5).map((art) => (
-					<div className='topFive' ><a href={art.url}>
-						{art.media[0]["media-metadata"][4] ? 
-									<div><img style={{width: "100%"}} src={art.media[0]["media-metadata"][4].url}/></div> : null							 	
-						}
+					<div className='topFive' ><a href={art.url}>						
 						<div className='artTitleTF'> {art.title}
 							<span style={{fontWeight: '300'}}> - {art.section} </span> 
 							
@@ -201,10 +213,7 @@ render() {
 					</div> 
 		)) : this.state.currentType == 'mostShared' || this.state.currentType == 'mostEmailed' ? 
 				this.state.dat.slice(0,5).map((art) => (
-					<div className='topFiveMV'><a href={art.url}>
-						{art.media[0]["media-metadata"][2] ? 
-									<div className="imgDiv"><img style={{width: "100%"}} src={art.media[0]["media-metadata"][2].url}/></div> : null							 	
-						}
+					<div className='topFiveMV'><a href={art.url}>						
 						<div className='artTitleTF'> {art.title}
 							<span style={{fontWeight: '300'}}> - {art.section} </span> 
 							
